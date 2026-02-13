@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .slideshow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .loading-box {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .loading-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            flex-shrink: 0;
+        }
+
+        .loading-text {
+            color: #fff;
+            font-size: 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container" id="slideshow"></div>
+    
+    <div class="loading-box">
+        <div class="loading-spinner"></div>
+        <span class="loading-text">Loading</span>
+    </div>
+
+    <script>
+        // Add your image paths here - place photos in the images/ folder
+        // Use local paths: 'images/1.jpg', 'images/2.jpg', etc.
+        const images = [
+            'images/1.png',
+            'images/2.png',
+            'images/3.png',
+            'images/4.png'
+        ];
+
+        // Used when local images don't exist (FiveM may block external URLs - add your own images for best results)
+        const fallbackImages = [
+            'https://picsum.photos/id/10/1920/1080',
+            'https://picsum.photos/id/11/1920/1080',
+            'https://picsum.photos/id/14/1920/1080',
+            'https://picsum.photos/id/15/1920/1080',
+            'https://picsum.photos/id/16/1920/1080'
+        ];
+
+        const container = document.getElementById('slideshow');
+        const slides = [];
+        let currentSlide = 0;
+
+        function createSlides() {
+            // Try local images first; use fallbacks if needed
+            const imageList = images.length > 0 ? images : fallbackImages;
+            
+            imageList.forEach((src, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide' + (index === 0 ? ' active' : '');
+                slide.style.backgroundImage = `url('${src}')`;
+                container.appendChild(slide);
+                slides.push(slide);
+            });
+        }
+
+        function nextSlide() {
+            if (slides.length <= 1) return;
+            
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        createSlides();
+        
+        if (slides.length > 1) {
+            setInterval(nextSlide, 4500);
+        }
+    </script>
+</body>
+</html>
