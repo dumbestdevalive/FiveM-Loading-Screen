@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author 'Custom'
+author 'DumbestDev'
 description 'Photo slideshow loading screen with loading indicator'
 version '1.0.0'
 
@@ -13,3 +13,4 @@ files {
 }
 
 loadscreen 'index.html'
+
