@@ -88,16 +88,12 @@
     </div>
 
     <script>
-        // Add your image paths here - place photos in the images/ folder
-        // Use local paths: 'images/1.jpg', 'images/2.jpg', etc.
         const images = [
             'images/1.png',
             'images/2.png',
             'images/3.png',
             'images/4.png'
         ];
-
-        // Used when local images don't exist (FiveM may block external URLs - add your own images for best results)
         const fallbackImages = [
             'https://picsum.photos/id/10/1920/1080',
             'https://picsum.photos/id/11/1920/1080',
@@ -111,7 +107,6 @@
         let currentSlide = 0;
 
         function createSlides() {
-            // Try local images first; use fallbacks if needed
             const imageList = images.length > 0 ? images : fallbackImages;
             
             imageList.forEach((src, index) => {
@@ -139,3 +134,4 @@
     </script>
 </body>
 </html>
+
